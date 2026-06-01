@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="BigHappySmiley Designs logo">
+  <defs>
+    <linearGradient id="bhsCyan" x1="0.2" y1="0" x2="0.8" y2="1">
+      <stop offset="0" stop-color="#8fe9fb"/>
+      <stop offset="1" stop-color="#22c3f3"/>
+    </linearGradient>
+  </defs>
+  <!-- outer dark navy ring -->
+  <circle cx="100" cy="100" r="96" fill="#14273f"/>
+  <!-- royal blue field -->
+  <circle cx="100" cy="100" r="84" fill="#2f7ff6"/>
+  <!-- inner cyan concentric ring -->
+  <circle cx="100" cy="100" r="68" fill="none" stroke="#26c4f3" stroke-width="13"/>
+  <!-- D letterform: dark navy stem + bowl -->
+  <path d="M62 48 H106 a52 52 0 0 1 0 104 H62 Z" fill="#14273f"/>
+  <!-- diagonal cut at lower-left of the stem -->
+  <path d="M62 152 V120 L94 152 Z" fill="#2f7ff6"/>
+  <!-- cyan counter of the D -->
+  <path d="M80 68 H104 a32 32 0 0 1 0 64 H80 Z" fill="url(#bhsCyan)"/>
+</svg>
