@@ -69,7 +69,7 @@ function Nav() {
     <header className={`nav ${scrolled ? 'scrolled' : ''}`}>
       <div className="nav-inner">
         <a href="#top" className="brand">
-          <img src="/logo.svg" alt="" className="brand-logo" />
+          <img src="/logo.png" alt="" className="brand-logo" />
           BigHappySmiley<span>Designs</span>
         </a>
         <nav className="nav-links">
@@ -88,7 +88,7 @@ function Hero() {
   return (
     <section className="hero" id="top">
       <div className="hero-content">
-        <img src="/logo.svg" alt="BigHappySmiley Designs" className="hero-logo" />
+        <img src="/logo.png" alt="BigHappySmiley Designs" className="hero-logo" />
         <p className="eyebrow">BigHappySmiley Designs</p>
         <h1>
           Design that<br />speaks for itself.
@@ -196,7 +196,7 @@ function Footer() {
     <footer className="footer">
       <div className="footer-inner">
         <span className="brand brand-footer">
-          <img src="/logo.svg" alt="" className="brand-logo" />
+          <img src="/logo.png" alt="" className="brand-logo" />
           BigHappySmiley<span>Designs</span>
         </span>
         <p>© {new Date().getFullYear()} BigHappySmiley Designs. All rights reserved.</p>
