@@ -32,6 +32,41 @@ const SERVICES = [
 // Images live in /public/gallery/. Add entries here as work is added.
 const GALLERY = [];
 
+const FAQS = [
+  {
+    q: 'What services does BigHappySmiley Designs offer?',
+    a: "We're an online graphic design studio. Our specialties include custom logo and icon design, posters and flyers, presentations, business cards and stickers, and full websites. If you need something design-related that isn't listed, just ask.",
+  },
+  {
+    q: 'How much does a custom logo cost?',
+    a: 'Every project is priced to the scope of the work, and we pride ourselves on being affordable — typically well below comparable studios. Reach out with a short description of what you need and we\'ll send a clear quote, with no obligation.',
+  },
+  {
+    q: 'Do you work with clients remotely?',
+    a: "Yes. We're a fully online studio and work with clients anywhere. Everything happens over email, so your location is never a barrier.",
+  },
+  {
+    q: 'How does the design process work?',
+    a: 'It starts with a quick conversation about your goals, style, and any references you like. We then design initial concepts, share them with you, and refine based on your feedback until it\'s exactly right.',
+  },
+  {
+    q: 'How many revisions do I get?',
+    a: "We work with you until you're happy with the result, refining the design based on your feedback so the final piece truly fits your brand.",
+  },
+  {
+    q: 'What files will I receive for my logo?',
+    a: 'You\'ll receive your finished logo in the formats you need for both digital and print use, so it looks sharp everywhere — from your website and social media to business cards and signage.',
+  },
+  {
+    q: 'Can you design and ship physical products?',
+    a: 'Yes. Beyond digital files, our print team can produce tangible products like business cards and stickers and ship them to you — premium quality at an affordable price.',
+  },
+  {
+    q: 'How do I get started?',
+    a: 'Email us at designs@bighappysmiley.com or call (845) 213-2071 with a bit about your project, and we\'ll reply with next steps and a quote.',
+  },
+];
+
 /* Wrap content to fade/slide in when it scrolls into view */
 function Reveal({ as: Tag = 'div', className = '', children, ...rest }) {
   const ref = useRef(null);
@@ -81,6 +116,7 @@ function Nav() {
           {GALLERY.length > 0 && <a href="#work">Work</a>}
           <a href="#products">Products</a>
           <a href="#reviews">Reviews</a>
+          <a href="#faq">FAQ</a>
           <a href="#contact">Contact</a>
         </nav>
         <a href="#contact" className="nav-cta">Get Started</a>
@@ -239,6 +275,49 @@ function Reviews() {
   );
 }
 
+function FaqItem({ q, a }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className={`faq-item ${open ? 'open' : ''}`}>
+      <button className="faq-q" onClick={() => setOpen((o) => !o)} aria-expanded={open}>
+        <span>{q}</span>
+        <span className="faq-icon" aria-hidden="true">+</span>
+      </button>
+      <div className="faq-a-wrap">
+        <p className="faq-a">{a}</p>
+      </div>
+    </div>
+  );
+}
+
+function Faq() {
+  // FAQPage structured data — single source of truth from FAQS.
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: FAQS.map(({ q, a }) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  };
+
+  return (
+    <section className="section" id="faq">
+      <Reveal className="section-head">
+        <p className="eyebrow">FAQ</p>
+        <h2>Questions, answered.</h2>
+      </Reveal>
+      <Reveal className="faq-list">
+        {FAQS.map((item) => (
+          <FaqItem key={item.q} {...item} />
+        ))}
+      </Reveal>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+    </section>
+  );
+}
+
 function Contact() {
   return (
     <section className="contact" id="contact">
@@ -284,6 +363,7 @@ export default function App() {
         <Gallery />
         <Products />
         <Reviews />
+        <Faq />
         <Contact />
       </main>
       <Footer />
