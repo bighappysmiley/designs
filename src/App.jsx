@@ -356,6 +356,12 @@ function Footer() {
 export default function App() {
   return (
     <>
+      <div className="aurora" aria-hidden="true">
+        <span className="o1" />
+        <span className="o2" />
+        <span className="o3" />
+        <span className="o4" />
+      </div>
       <Nav />
       <main>
         <Hero />
