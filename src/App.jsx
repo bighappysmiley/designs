@@ -4,7 +4,7 @@ const SERVICES = [
   {
     num: '01',
     title: 'Logos & Icons',
-    body: 'Our designers create an amazing logo tailored to your needs — a mark that defines your brand and scales everywhere.',
+    body: 'Custom logo design tailored to your brand — a distinctive, professional mark that scales everywhere, from your website to your business cards.',
   },
   {
     num: '02',
@@ -94,8 +94,8 @@ function Hero() {
           Design that<br />speaks for itself.
         </h1>
         <p className="hero-sub">
-          A design studio crafting logos, print, presentations, and websites — built with
-          precision, delivered at a price that makes sense.
+          An online graphic design studio specializing in custom logo design — plus print,
+          presentations, and websites. Professional quality, delivered at a price that makes sense.
         </p>
         <div className="hero-actions">
           <a href="#contact" className="btn btn-primary">Get Started</a>
