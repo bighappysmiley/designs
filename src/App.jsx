@@ -28,6 +28,10 @@ const SERVICES = [
   },
 ];
 
+// Real client work. Each item: { src, title, client }.
+// Images live in /public/gallery/. Add entries here as work is added.
+const GALLERY = [];
+
 /* Wrap content to fade/slide in when it scrolls into view */
 function Reveal({ as: Tag = 'div', className = '', children, ...rest }) {
   const ref = useRef(null);
@@ -74,6 +78,7 @@ function Nav() {
         </a>
         <nav className="nav-links">
           <a href="#services">Services</a>
+          {GALLERY.length > 0 && <a href="#work">Work</a>}
           <a href="#products">Products</a>
           <a href="#reviews">Reviews</a>
           <a href="#contact">Contact</a>
@@ -129,6 +134,70 @@ function Services() {
           <a href="#contact" className="btn btn-primary">Contact Us</a>
         </Reveal>
       </div>
+    </section>
+  );
+}
+
+function Gallery() {
+  const [active, setActive] = useState(null); // index of open lightbox image
+
+  useEffect(() => {
+    if (active === null) return;
+    const onKey = (e) => {
+      if (e.key === 'Escape') setActive(null);
+      if (e.key === 'ArrowRight') setActive((i) => (i + 1) % GALLERY.length);
+      if (e.key === 'ArrowLeft') setActive((i) => (i - 1 + GALLERY.length) % GALLERY.length);
+    };
+    document.addEventListener('keydown', onKey);
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', onKey);
+      document.body.style.overflow = '';
+    };
+  }, [active]);
+
+  if (GALLERY.length === 0) return null;
+
+  return (
+    <section className="section" id="work">
+      <Reveal className="section-head">
+        <p className="eyebrow">Our Work</p>
+        <h2>Designs we're proud of.</h2>
+      </Reveal>
+
+      <div className="gallery">
+        {GALLERY.map((item, i) => (
+          <Reveal
+            as="button"
+            type="button"
+            className="gallery-item"
+            key={item.src}
+            onClick={() => setActive(i)}
+            aria-label={`View ${item.title}`}
+          >
+            <img src={item.src} alt={item.title} loading="lazy" />
+            <span className="gallery-caption">
+              <strong>{item.title}</strong>
+              {item.client && <em>{item.client}</em>}
+            </span>
+          </Reveal>
+        ))}
+      </div>
+
+      {active !== null && (
+        <div className="lightbox" onClick={() => setActive(null)} role="dialog" aria-modal="true">
+          <button className="lightbox-close" aria-label="Close">×</button>
+          <img
+            src={GALLERY[active].src}
+            alt={GALLERY[active].title}
+            onClick={(e) => e.stopPropagation()}
+          />
+          <p className="lightbox-caption">
+            {GALLERY[active].title}
+            {GALLERY[active].client ? ` — ${GALLERY[active].client}` : ''}
+          </p>
+        </div>
+      )}
     </section>
   );
 }
@@ -212,6 +281,7 @@ export default function App() {
       <main>
         <Hero />
         <Services />
+        <Gallery />
         <Products />
         <Reviews />
         <Contact />
