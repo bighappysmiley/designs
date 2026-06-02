@@ -108,7 +108,7 @@ function Hero() {
 
 function Services() {
   return (
-    <section className="section" id="services">
+    <section className="section divider-top" id="services">
       <Reveal className="section-head">
         <p className="eyebrow">Our Services</p>
         <h2>Everything you need to look the part.</h2>
