@@ -189,7 +189,17 @@ function Hero() {
   );
 }
 
+function DribbbleIcon({ size = 22 }) {
+  return (
+    <svg viewBox="0 0 24 24" width={size} height={size} fill="currentColor" aria-hidden="true">
+      <path d="M12 24C5.385 24 0 18.615 0 12S5.385 0 12 0s12 5.385 12 12-5.385 12-12 12zm10.12-10.358c-.35-.11-3.17-.953-6.384-.438 1.34 3.684 1.887 6.684 1.992 7.308 2.3-1.555 3.936-4.02 4.392-6.87zm-6.115 7.808c-.153-.9-.75-4.032-2.19-7.77l-.066.02c-5.79 2.015-7.86 6.025-8.04 6.4 1.73 1.358 3.92 2.166 6.29 2.166 1.42 0 2.77-.29 4-.816zm-11.62-2.58c.232-.4 3.045-5.055 8.332-6.765.135-.045.27-.084.405-.12-.26-.585-.54-1.167-.832-1.74C7.17 11.775 2.206 11.71 1.756 11.7l-.004.312c0 2.633.998 5.037 2.634 6.855zm-2.42-8.955c.46.008 4.683.026 9.477-1.248-1.698-3.018-3.53-5.558-3.8-5.928-2.868 1.35-5.01 3.99-5.676 7.17zM9.6 2.052c.282.38 2.145 2.914 3.822 6 3.645-1.365 5.19-3.44 5.373-3.702-1.81-1.61-4.19-2.586-6.795-2.586-.825 0-1.63.1-2.4.285zm10.335 3.483c-.218.29-1.935 2.493-5.724 4.04.24.49.47.985.68 1.486.08.18.15.36.22.53 3.41-.43 6.8.26 7.14.33-.02-2.42-.88-4.64-2.31-6.38z" />
+    </svg>
+  );
+}
+
 function Services() {
+  const [active, setActive] = useState(0);
+  const s = SERVICES[active];
   return (
     <section className="section band-white" id="services">
       <Reveal className="section-head">
@@ -197,21 +207,36 @@ function Services() {
         <h2>Everything you need to look the part.</h2>
       </Reveal>
 
-      <div className="cards">
-        {SERVICES.map((s, i) => (
-          <Reveal as="article" className="card" key={s.num} delay={i * 80}>
-            <div className="card-num">{s.num}</div>
-            <h3>{s.title}</h3>
-            <p>{s.body}</p>
-          </Reveal>
-        ))}
+      <Reveal className="features">
+        <div className="feature-list" role="tablist" aria-label="Services">
+          {SERVICES.map((item, i) => (
+            <button
+              key={item.num}
+              role="tab"
+              aria-selected={active === i}
+              className={`feature-item ${active === i ? 'active' : ''}`}
+              onClick={() => setActive(i)}
+              onMouseEnter={() => setActive(i)}
+            >
+              <span className="feature-num">{item.num}</span>
+              <span className="feature-name">{item.title}</span>
+              <span className="feature-arrow" aria-hidden="true">→</span>
+            </button>
+          ))}
+          <a className="feature-more" href="#contact">Need something else? Contact us →</a>
+        </div>
 
-        <Reveal as="article" className="card card-cta" delay={SERVICES.length * 80}>
-          <h3>Have something else in mind?</h3>
-          <p>Tell us about your project and we'll make it real.</p>
-          <a href="#contact" className="btn btn-primary">Contact Us</a>
-        </Reveal>
-      </div>
+        <div className="feature-preview">
+          <div className="preview-window">
+            <div className="preview-bar"><span /><span /><span /></div>
+            <div className="preview-body" key={active}>
+              <div className="preview-num">{s.num}</div>
+              <h3>{s.title}</h3>
+              <p>{s.body}</p>
+            </div>
+          </div>
+        </div>
+      </Reveal>
     </section>
   );
 }
@@ -361,20 +386,91 @@ function Faq() {
 }
 
 function Contact() {
+  const [sent, setSent] = useState(false);
+  const [sending, setSending] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setSending(true);
+    const body = new URLSearchParams(new FormData(e.target)).toString();
+    try {
+      await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body,
+      });
+    } catch {
+      /* Netlify records the submission even if the response is opaque */
+    }
+    setSending(false);
+    setSent(true);
+  };
+
   return (
     <section className="contact" id="contact">
       <Reveal className="contact-inner">
         <p className="eyebrow eyebrow-light">Contact</p>
         <h2>Let's build something great.</h2>
-        <div className="contact-grid">
-          <a className="contact-item" href="mailto:designs@bighappysmiley.com">
-            <span className="contact-label">Email</span>
-            <span className="contact-value">designs@bighappysmiley.com</span>
-          </a>
-          <a className="contact-item" href="tel:+18452132071">
-            <span className="contact-label">Phone</span>
-            <span className="contact-value">(845) 213-2071</span>
-          </a>
+        <p className="contact-lead">
+          Have a project in mind? Send us a message below — or see our work and reach out on Dribbble.
+        </p>
+
+        <div className="contact-cols">
+          <div className="contact-form-wrap">
+            {sent ? (
+              <div className="contact-thanks">
+                <h3>Thanks — your message is on its way.</h3>
+                <p>We'll get back to you at the email you provided. Talk soon!</p>
+              </div>
+            ) : (
+              <form
+                name="contact"
+                method="POST"
+                data-netlify="true"
+                netlify-honeypot="bot-field"
+                onSubmit={handleSubmit}
+                className="contact-form"
+              >
+                <input type="hidden" name="form-name" value="contact" />
+                <p className="hp" hidden>
+                  <label>Don't fill this out: <input name="bot-field" /></label>
+                </p>
+                <div className="field">
+                  <label htmlFor="cf-name">Name</label>
+                  <input id="cf-name" name="name" type="text" autoComplete="name" required />
+                </div>
+                <div className="field">
+                  <label htmlFor="cf-email">Email</label>
+                  <input id="cf-email" name="email" type="email" autoComplete="email" required />
+                </div>
+                <div className="field">
+                  <label htmlFor="cf-message">Message</label>
+                  <textarea id="cf-message" name="message" rows="4" required />
+                </div>
+                <button type="submit" className="btn btn-primary" disabled={sending}>
+                  {sending ? 'Sending…' : 'Send message'}
+                </button>
+              </form>
+            )}
+          </div>
+
+          <aside className="contact-aside">
+            <a
+              className="contact-card"
+              href="https://dribbble.com/bighappysmiley"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <DribbbleIcon size={26} />
+              <span><strong>Dribbble</strong><em>See our work</em></span>
+            </a>
+            <a className="contact-card" href="mailto:designs@bighappysmiley.com">
+              <span><strong>Email</strong><em>designs@bighappysmiley.com</em></span>
+            </a>
+            <a className="contact-card" href="tel:+18452132071">
+              <span><strong>Phone</strong><em>(845) 213-2071</em></span>
+            </a>
+          </aside>
         </div>
       </Reveal>
     </section>
@@ -396,9 +492,7 @@ function Footer() {
           rel="noopener noreferrer"
           aria-label="BigHappySmiley Designs on Dribbble"
         >
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true">
-            <path d="M12 24C5.385 24 0 18.615 0 12S5.385 0 12 0s12 5.385 12 12-5.385 12-12 12zm10.12-10.358c-.35-.11-3.17-.953-6.384-.438 1.34 3.684 1.887 6.684 1.992 7.308 2.3-1.555 3.936-4.02 4.392-6.87zm-6.115 7.808c-.153-.9-.75-4.032-2.19-7.77l-.066.02c-5.79 2.015-7.86 6.025-8.04 6.4 1.73 1.358 3.92 2.166 6.29 2.166 1.42 0 2.77-.29 4-.816zm-11.62-2.58c.232-.4 3.045-5.055 8.332-6.765.135-.045.27-.084.405-.12-.26-.585-.54-1.167-.832-1.74C7.17 11.775 2.206 11.71 1.756 11.7l-.004.312c0 2.633.998 5.037 2.634 6.855zm-2.42-8.955c.46.008 4.683.026 9.477-1.248-1.698-3.018-3.53-5.558-3.8-5.928-2.868 1.35-5.01 3.99-5.676 7.17zM9.6 2.052c.282.38 2.145 2.914 3.822 6 3.645-1.365 5.19-3.44 5.373-3.702-1.81-1.61-4.19-2.586-6.795-2.586-.825 0-1.63.1-2.4.285zm10.335 3.483c-.218.29-1.935 2.493-5.724 4.04.24.49.47.985.68 1.486.08.18.15.36.22.53 3.41-.43 6.8.26 7.14.33-.02-2.42-.88-4.64-2.31-6.38z" />
-          </svg>
+          <DribbbleIcon size={22} />
           <span>Dribbble</span>
         </a>
         <p>© {new Date().getFullYear()} BigHappySmiley Designs. All rights reserved.</p>
