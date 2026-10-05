@@ -132,7 +132,7 @@ function Hero() {
         <img src="/logo.png" alt="BigHappySmiley Designs" className="hero-logo" />
         <p className="eyebrow">BigHappySmiley Designs</p>
         <h1>
-          Design that<br />speaks for itself.
+          Design that<br /><em>speaks for itself.</em>
         </h1>
         <p className="hero-sub">
           An online graphic design studio specializing in custom logo design — plus print,
@@ -149,7 +149,7 @@ function Hero() {
 
 function Services() {
   return (
-    <section className="section divider-top" id="services">
+    <section className="section band-white" id="services">
       <Reveal className="section-head">
         <p className="eyebrow">Our Services</p>
         <h2>Everything you need to look the part.</h2>
@@ -264,9 +264,9 @@ function Reviews() {
       <div className="reviews">
         <Reveal as="figure" className="quote">
           <blockquote>
-            "They were surprisingly affordable, costing significantly less than similar products
+            They were surprisingly affordable, costing significantly less than similar products
             on the market. Even more impressively, they arrived at my doorstep in less than two
-            days, thanks to the efficient shipping service."
+            days, thanks to the efficient shipping service.
           </blockquote>
           <figcaption>— M. Magic</figcaption>
         </Reveal>
@@ -303,7 +303,7 @@ function Faq() {
   };
 
   return (
-    <section className="section" id="faq">
+    <section className="section band-white" id="faq">
       <Reveal className="section-head">
         <p className="eyebrow">FAQ</p>
         <h2>Questions, answered.</h2>
@@ -356,12 +356,6 @@ function Footer() {
 export default function App() {
   return (
     <>
-      <div className="aurora" aria-hidden="true">
-        <span className="o1" />
-        <span className="o2" />
-        <span className="o3" />
-        <span className="o4" />
-      </div>
       <Nav />
       <main>
         <Hero />
