@@ -68,7 +68,7 @@ const FAQS = [
 ];
 
 /* Wrap content to fade/slide in when it scrolls into view */
-function Reveal({ as: Tag = 'div', className = '', children, ...rest }) {
+function Reveal({ as: Tag = 'div', className = '', children, delay = 0, style, ...rest }) {
   const ref = useRef(null);
   const [shown, setShown] = useState(false);
 
@@ -89,7 +89,12 @@ function Reveal({ as: Tag = 'div', className = '', children, ...rest }) {
   }, []);
 
   return (
-    <Tag ref={ref} className={`reveal ${shown ? 'in' : ''} ${className}`.trim()} {...rest}>
+    <Tag
+      ref={ref}
+      className={`reveal ${shown ? 'in' : ''} ${className}`.trim()}
+      style={{ transitionDelay: `${delay}ms`, ...style }}
+      {...rest}
+    >
       {children}
     </Tag>
   );
@@ -128,19 +133,32 @@ function Nav() {
 function Hero() {
   return (
     <section className="hero" id="top">
+      <div className="hero-glow" aria-hidden="true">
+        <span className="g1" />
+        <span className="g2" />
+        <span className="g3" />
+      </div>
+
       <div className="hero-content">
-        <img src="/logo.png" alt="BigHappySmiley Designs" className="hero-logo" />
-        <p className="eyebrow">BigHappySmiley Designs</p>
-        <h1>
+        <p className="eyebrow reveal in">BigHappySmiley Designs</p>
+        <h1 className="reveal in" style={{ transitionDelay: '60ms' }}>
           Design that<br /><em>speaks for itself.</em>
         </h1>
-        <p className="hero-sub">
+        <p className="hero-sub reveal in" style={{ transitionDelay: '140ms' }}>
           An online graphic design studio specializing in custom logo design — plus print,
           presentations, and websites. Professional quality, delivered at a price that makes sense.
         </p>
-        <div className="hero-actions">
+        <div className="hero-actions reveal in" style={{ transitionDelay: '220ms' }}>
           <a href="#contact" className="btn btn-primary">Get Started</a>
-          <a href="#services" className="btn btn-ghost">Explore Services ↓</a>
+          <a href="#services" className="btn btn-ghost">Explore Services</a>
+        </div>
+      </div>
+
+      <div className="hero-showcase reveal in" style={{ transitionDelay: '320ms' }}>
+        <div className="showcase-inner">
+          <img src="/logo.png" alt="BigHappySmiley Designs" className="showcase-logo" />
+          <span className="showcase-word">BigHappySmiley<em>Designs</em></span>
+          <span className="showcase-tag">Logos · Print · Presentations · Websites</span>
         </div>
       </div>
     </section>
@@ -156,15 +174,15 @@ function Services() {
       </Reveal>
 
       <div className="cards">
-        {SERVICES.map((s) => (
-          <Reveal as="article" className="card" key={s.num}>
+        {SERVICES.map((s, i) => (
+          <Reveal as="article" className="card" key={s.num} delay={i * 80}>
             <div className="card-num">{s.num}</div>
             <h3>{s.title}</h3>
             <p>{s.body}</p>
           </Reveal>
         ))}
 
-        <Reveal as="article" className="card card-cta">
+        <Reveal as="article" className="card card-cta" delay={SERVICES.length * 80}>
           <h3>Have something else in mind?</h3>
           <p>Tell us about your project and we'll make it real.</p>
           <a href="#contact" className="btn btn-primary">Contact Us</a>
