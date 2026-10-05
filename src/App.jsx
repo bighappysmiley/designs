@@ -159,31 +159,20 @@ function HeroHeadline() {
 function Hero() {
   return (
     <section className="hero" id="top">
-      <div className="hero-glow" aria-hidden="true">
-        <span className="g1" />
-        <span className="g2" />
-        <span className="g3" />
-      </div>
-
       <div className="hero-content">
         <p className="eyebrow reveal in">BigHappySmiley Designs</p>
         <HeroHeadline />
-        <p className="hero-sub reveal in" style={{ transitionDelay: '620ms' }}>
+        <p className="hero-sub reveal in" style={{ transitionDelay: '520ms' }}>
           An online graphic design studio specializing in custom logo design — plus print,
           presentations, and websites. Professional quality, delivered at a price that makes sense.
         </p>
-        <div className="hero-actions reveal in" style={{ transitionDelay: '720ms' }}>
+        <div className="hero-actions reveal in" style={{ transitionDelay: '600ms' }}>
           <a href="#contact" className="btn btn-primary">Get Started</a>
           <a href="#services" className="btn btn-ghost">Explore Services</a>
         </div>
-      </div>
-
-      <div className="hero-showcase reveal in" style={{ transitionDelay: '820ms' }}>
-        <div className="showcase-inner">
-          <img src="/logo.png" alt="BigHappySmiley Designs" className="showcase-logo" />
-          <span className="showcase-word">BigHappySmiley<em>Designs</em></span>
-          <span className="showcase-tag">Logos · Print · Presentations · Websites</span>
-        </div>
+        <p className="hero-meta reveal in" style={{ transitionDelay: '680ms' }}>
+          Logos &nbsp;·&nbsp; Brand Identity &nbsp;·&nbsp; Print &nbsp;·&nbsp; Presentations &nbsp;·&nbsp; Websites
+        </p>
       </div>
     </section>
   );
