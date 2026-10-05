@@ -130,6 +130,32 @@ function Nav() {
   );
 }
 
+function HeroHeadline() {
+  // Word-by-word blur-in reveal (Zen-style). "speaks for itself" is the coral accent.
+  const words = [
+    { t: 'Design' }, { t: 'that' }, { br: true },
+    { t: 'speaks', accent: true }, { t: 'for', accent: true }, { t: 'itself.', accent: true },
+  ];
+  let i = 0;
+  return (
+    <h1 className="hero-title">
+      {words.map((w, idx) =>
+        w.br ? (
+          <br key={idx} className="title-br" />
+        ) : (
+          <span
+            key={idx}
+            className={`word ${w.accent ? 'word-accent' : ''}`}
+            style={{ animationDelay: `${(i++) * 90}ms` }}
+          >
+            {w.t}
+          </span>
+        )
+      )}
+    </h1>
+  );
+}
+
 function Hero() {
   return (
     <section className="hero" id="top">
@@ -141,20 +167,18 @@ function Hero() {
 
       <div className="hero-content">
         <p className="eyebrow reveal in">BigHappySmiley Designs</p>
-        <h1 className="reveal in" style={{ transitionDelay: '60ms' }}>
-          Design that<br /><em>speaks for itself.</em>
-        </h1>
-        <p className="hero-sub reveal in" style={{ transitionDelay: '140ms' }}>
+        <HeroHeadline />
+        <p className="hero-sub reveal in" style={{ transitionDelay: '620ms' }}>
           An online graphic design studio specializing in custom logo design — plus print,
           presentations, and websites. Professional quality, delivered at a price that makes sense.
         </p>
-        <div className="hero-actions reveal in" style={{ transitionDelay: '220ms' }}>
+        <div className="hero-actions reveal in" style={{ transitionDelay: '720ms' }}>
           <a href="#contact" className="btn btn-primary">Get Started</a>
           <a href="#services" className="btn btn-ghost">Explore Services</a>
         </div>
       </div>
 
-      <div className="hero-showcase reveal in" style={{ transitionDelay: '320ms' }}>
+      <div className="hero-showcase reveal in" style={{ transitionDelay: '820ms' }}>
         <div className="showcase-inner">
           <img src="/logo.png" alt="BigHappySmiley Designs" className="showcase-logo" />
           <span className="showcase-word">BigHappySmiley<em>Designs</em></span>
@@ -365,6 +389,18 @@ function Footer() {
           <img src="/logo.png" alt="" className="brand-logo" />
           BigHappySmiley<span>Designs</span>
         </span>
+        <a
+          className="social"
+          href="https://dribbble.com/bighappysmiley"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="BigHappySmiley Designs on Dribbble"
+        >
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true">
+            <path d="M12 24C5.385 24 0 18.615 0 12S5.385 0 12 0s12 5.385 12 12-5.385 12-12 12zm10.12-10.358c-.35-.11-3.17-.953-6.384-.438 1.34 3.684 1.887 6.684 1.992 7.308 2.3-1.555 3.936-4.02 4.392-6.87zm-6.115 7.808c-.153-.9-.75-4.032-2.19-7.77l-.066.02c-5.79 2.015-7.86 6.025-8.04 6.4 1.73 1.358 3.92 2.166 6.29 2.166 1.42 0 2.77-.29 4-.816zm-11.62-2.58c.232-.4 3.045-5.055 8.332-6.765.135-.045.27-.084.405-.12-.26-.585-.54-1.167-.832-1.74C7.17 11.775 2.206 11.71 1.756 11.7l-.004.312c0 2.633.998 5.037 2.634 6.855zm-2.42-8.955c.46.008 4.683.026 9.477-1.248-1.698-3.018-3.53-5.558-3.8-5.928-2.868 1.35-5.01 3.99-5.676 7.17zM9.6 2.052c.282.38 2.145 2.914 3.822 6 3.645-1.365 5.19-3.44 5.373-3.702-1.81-1.61-4.19-2.586-6.795-2.586-.825 0-1.63.1-2.4.285zm10.335 3.483c-.218.29-1.935 2.493-5.724 4.04.24.49.47.985.68 1.486.08.18.15.36.22.53 3.41-.43 6.8.26 7.14.33-.02-2.42-.88-4.64-2.31-6.38z" />
+          </svg>
+          <span>Dribbble</span>
+        </a>
         <p>© {new Date().getFullYear()} BigHappySmiley Designs. All rights reserved.</p>
       </div>
     </footer>
